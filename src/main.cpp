@@ -92,8 +92,10 @@ Map MapSeeder::seed()
 {
   Map m;
 
-  int height = 10;
-  int width = 10;
+  std::srand(time(NULL));
+
+  int height = (rand() % 20) + 10;
+  int width = height;
 
   m.height = height;
   m.width = width;
