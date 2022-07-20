@@ -1,8 +1,16 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include <fstream>
 #include <sstream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <stdlib.h>
+#include <math.h>
+#include <stdlib.h>
+#include <algorithm>
+#include <cstdlib>
+#include <utility>
+#include <time.h>
+#include <iomanip>
 
 class Map
 {
@@ -12,7 +20,7 @@ public:
   int height;
   std::vector<std::vector<int>> cells;
   void saveIntoFile(std::string filePath);
-  Map getFromFile(std::string filePath);
+  void getFromFile(std::string filePath);
 };
 
 Map::Map()
@@ -36,7 +44,7 @@ void Map::saveIntoFile(std::string filePath)
         }
         else
         {
-          file << this->cells[i][j];
+          file << this->cells[i][j] << " ";
         }
       }
     }
@@ -50,10 +58,28 @@ void Map::saveIntoFile(std::string filePath)
   }
 }
 
-Map getFromFile(std::string filePath)
+void Map::getFromFile(std::string filePath)
 {
   Map map;
-  return map;
+
+  std::fstream file;
+  std::string line;
+
+  file.open(filePath);
+
+  if (file.is_open())
+  {
+    while (std::getline(file, line))
+    {
+      std::cout << line << std::endl;
+    }
+    file.close();
+  }
+  else
+  {
+    std::cout << "[ERROR] Arquivo nao encontrado";
+    exit(EXIT_FAILURE);
+  }
 };
 
 class MapSeeder
@@ -104,6 +130,8 @@ int main(int argc, char **argv)
   Map map = seeder.seed();
 
   map.saveIntoFile(filePath);
+
+  map.getFromFile(filePath);
 
   return 0;
 }
